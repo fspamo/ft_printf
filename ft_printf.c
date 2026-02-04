@@ -6,9 +6,13 @@
 /*   By: cbozkurt <cbozkurt@student.42kocaeli.com.  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/03 02:38:03 by cbozkurt          #+#    #+#             */
-/*   Updated: 2026/02/03 02:46:12 by cbozkurt         ###   ########.fr       */
+/*   Updated: 2026/02/04 23:33:15 by cbozkurt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "ft_printf.h"
+#include <stdarg.h>
+
 
 int	ft_printf(const char *format, ...)
 {
