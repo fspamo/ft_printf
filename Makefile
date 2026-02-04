@@ -4,7 +4,7 @@ NAME =  libft.a
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
 
-SRC = 
+SRC = ft_printf.c ft_putchar.c
 
 OBJ = $(SRC:.c=.o)
 
