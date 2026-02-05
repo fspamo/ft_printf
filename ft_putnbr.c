@@ -6,13 +6,30 @@
 /*   By: cbozkurt <cbozkurt@student.42kocaeli.com.  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/05 01:38:08 by cbozkurt          #+#    #+#             */
-/*   Updated: 2026/02/05 01:38:09 by cbozkurt         ###   ########.fr       */
+/*   Updated: 2026/02/05 17:18:12 by cbozkurt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
 
-void	ft_putnbr(int n)
+int	get_digit(int n)
+{
+	int	digit;
+
+	digit = 1;
+	if (n < 0)
+	{
+		digit++;
+	}
+	while (n >= 10)
+	{
+		n /= 10;
+		digit++;
+	}
+	return (digit);
+}
+
+int	ft_putnbr(int n)
 {
 	long int	nb;
 	char		c;
@@ -29,4 +46,5 @@ void	ft_putnbr(int n)
 	}
 	c = (nb % 10) + '0';
 	write(1, &c, 1);
+	return (get_digit(nb));
 }
