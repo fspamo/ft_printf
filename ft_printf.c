@@ -6,7 +6,7 @@
 /*   By: cbozkurt <cbozkurt@student.42kocaeli.com.  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/03 02:38:03 by cbozkurt          #+#    #+#             */
-/*   Updated: 2026/02/05 03:12:58 by cbozkurt         ###   ########.fr       */
+/*   Updated: 2026/02/05 17:44:39 by cbozkurt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,11 @@ int	ft_printf(const char *format, ...)
 			count += ft_putstr(va_arg(args, char *));
 			i++;
 		}
+		else if (format[i] == '%' && format[i + 1] == 'd')
+		{
+			count += ft_putnbr(va_arg(args, int));
+			i++;
+		}
 		else
 		{
 			count += ft_putchar(format[i]);
@@ -47,5 +52,6 @@ int	ft_printf(const char *format, ...)
 
 int main(void)
 {
-	ft_printf("%s\n %c", "merhaba", 'c');
+	int nb = 123;
+	ft_printf("%d\n", nb);
 }
