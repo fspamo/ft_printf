@@ -6,7 +6,7 @@
 /*   By: cbozkurt <cbozkurt@student.42kocaeli.com.  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/03 02:38:03 by cbozkurt          #+#    #+#             */
-/*   Updated: 2026/02/06 16:09:13 by cbozkurt         ###   ########.fr       */
+/*   Updated: 2026/02/06 16:36:34 by cbozkurt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,8 +71,8 @@ int	ft_printf(const char *format, ...)
 
 int main(void)
 {
-	int nbr = 9;
-	int nb = 13;
-	ft_printf("%p, %p", nbr, nb);
+	int nbr = 243;
+	int nb = 243;
+	ft_printf("%p, %X", nbr, nb);
 }
 
