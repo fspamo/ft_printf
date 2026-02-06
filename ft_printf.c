@@ -6,18 +6,19 @@
 /*   By: cbozkurt <cbozkurt@student.42kocaeli.com.  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/03 02:38:03 by cbozkurt          #+#    #+#             */
-/*   Updated: 2026/02/05 23:14:26 by cbozkurt         ###   ########.fr       */
+/*   Updated: 2026/02/06 15:35:03 by cbozkurt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 #include <stdarg.h>
+#include <unistd.h>
 
 int	ft_printf(const char *format, ...)
 {
 	va_list args;
-	int i;
-	int count;
+	int		i;
+	int		count;
 	va_start(args, format);
 
 	i = 0;
@@ -39,9 +40,10 @@ int	ft_printf(const char *format, ...)
 			count += ft_putnbr(va_arg(args, int));
 			i++;
 		}
-		else if (format[i] == '%' && format[i + 1] == '')
+		else if (format[i] == '%' && format[i + 1] == 'p')
 		{
-			count += ft_putnbr(va_arg(args, int));
+			write (1, "0x", 2);
+			count += ft_print_hex(va_arg(args, unsigned long), count);
 			i++;
 		}
 		else
@@ -57,6 +59,8 @@ int	ft_printf(const char *format, ...)
 
 int main(void)
 {
-	int nb = 123;
-	ft_printf("%d\n", nb);
+	int nbr = 9;
+	int nb = 13;
+	ft_printf("%p, %p", nbr, nb);
 }
+
