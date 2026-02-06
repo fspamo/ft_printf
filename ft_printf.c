@@ -6,7 +6,7 @@
 /*   By: cbozkurt <cbozkurt@student.42kocaeli.com.  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/03 02:38:03 by cbozkurt          #+#    #+#             */
-/*   Updated: 2026/02/06 15:35:03 by cbozkurt         ###   ########.fr       */
+/*   Updated: 2026/02/06 16:09:13 by cbozkurt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,18 @@ int	ft_printf(const char *format, ...)
 		{
 			write (1, "0x", 2);
 			count += ft_print_hex(va_arg(args, unsigned long), count);
+			i++;
+		}
+		else if (format[i] == '%' && format[i + 1] == 'x')
+		{
+			write (1, "0x", 2);
+			count += ft_lowercase_base(va_arg(args, unsigned long), count);
+			i++;
+		}
+		else if (format[i] == '%' && format[i + 1] == 'X')
+		{
+			write (1, "0x", 2);
+			count += ft_uppercase_base(va_arg(args, unsigned long), count);
 			i++;
 		}
 		else
