@@ -6,7 +6,7 @@
 /*   By: cbozkurt <cbozkurt@student.42kocaeli.com.  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/03 02:38:03 by cbozkurt          #+#    #+#             */
-/*   Updated: 2026/02/07 00:29:14 by cbozkurt         ###   ########.fr       */
+/*   Updated: 2026/02/07 00:56:19 by cbozkurt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int	ft_printf(const char *format, ...)
 		}
 		else if (format[i] == '%' && format[i + 1] == 'u')
 		{
-			count += ft_print_u(va_arg(args, int));
+			count += ft_print_u(va_arg(args, unsigned int));
 			i++;
 		}
 		else
@@ -69,15 +69,12 @@ int	ft_printf(const char *format, ...)
 		}
 		i++;
 	}
-
 	va_end(args);
 	return (count);
 }
 
 int main(void)
 {
-	int nbr = 243;
-	int nb = 243;
-	ft_printf("%p, %X", nbr, nb);
+	int nbr = 42;
+	ft_printf("%u %X", nbr);
 }
-
