@@ -6,7 +6,7 @@
 /*   By: cbozkurt <cbozkurt@student.42kocaeli.com.  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/06 15:36:07 by cbozkurt          #+#    #+#             */
-/*   Updated: 2026/02/06 16:42:52 by cbozkurt         ###   ########.fr       */
+/*   Updated: 2026/02/06 16:50:12 by cbozkurt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,7 @@ int	ft_lowercase_base(unsigned long	val, size_t count)
 	size_t	holder;
 
 	base = "0123456789abcdef";
-	// count = write(1, "0x", 2);
-	if (count == (unsigned long)-1)
+	if (count == (unsigned long) - 1)
 		return (-1);
 	if (val > 16)
 		ft_lowercase_base(val / 16, count);
