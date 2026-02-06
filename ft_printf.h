@@ -8,6 +8,6 @@ int		ft_putchar(int c);
 int		ft_putstr(char *s);
 int		ft_print_hex(unsigned long val, size_t count);
 int		ft_lowercase_base(unsigned long val, size_t count);
-int		ft_uppercase(unsigned long val, size_t count);
+int		ft_uppercase_base(unsigned long val, size_t count);
 
 #endif
