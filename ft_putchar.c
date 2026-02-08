@@ -12,8 +12,9 @@
 
 #include <unistd.h>
 
-int	ft_putchar(int c)
+int	ft_putchar(int c, int count)
 {
+	(void)count;
     write(1, &c, 1);
     return (1);
 }
