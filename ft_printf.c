@@ -6,7 +6,7 @@
 /*   By: cbozkurt <cbozkurt@student.42kocaeli.com.  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/03 02:38:03 by cbozkurt          #+#    #+#             */
-/*   Updated: 2026/02/07 00:56:19 by cbozkurt         ###   ########.fr       */
+/*   Updated: 2026/02/08 15:21:04 by cbozkurt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,18 +20,13 @@ int *handle_num(const char *format, int i, int *count, va_list args)
 		ft_putchar(va_arg(args, int), count);
 	else if (format[i] == 's')
 		ft_putstr(va_arg(args, char *), count);
-	else if (format[i] == 'p')
-	{
-		count += write(1, "0x", 2);
-		ft_print_hex(va_arg(args, unsigned long), count, format[i]);
-	}
 	else if (format[i] == 'd' || format[i] == 'i')
 		ft_putnbr(va_arg(args, int), count);
 
 	return (count);
 }
 
-int *handle_hex(char *format, int i, int *count)
+int *handle_hex(const char *format, int i, int *count, va_list args)
 {
 	if (format[i] == 'p')
 		count += ft_print_hex(va_arg(args, int), count);
@@ -57,12 +52,12 @@ int	ft_printf(const char *format, ...)
 		{
 			i++;
 			if (format[i] == 'd' || format[i] == 'i' || format[i] == 'u')
-				handle_num(format, i, &count);
+				handle_num(format, i, &count, args);
 			if (format[i] == 'x' || format[i] == 'X' || format[i] == 'p')
-				handle_hex(format, i, &count);
+				handle_hex(format, i, &count, args);
 		}
 		else
-			count += ft_putchar(format[i]);
+			count += ft_putchar(format[i], &count);
 		i++;
 	}
 	va_end(args);
@@ -77,5 +72,5 @@ int main(void)
 
 	int val = 1337;
 
-	ft_printf("%s\n%s\n%s\n%d\n%p", s1, s2, s3, val, val);
+	ft_printf("%s\n%s\n%s\n%d\n%p\n%x\n%X\n", s1, s2, s3, val, val);
 }
