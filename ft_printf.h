@@ -4,7 +4,7 @@
 
 int		ft_printf(const char *format, ...);
 int		ft_putnbr(int n, int *count);
-int		ft_putchar(int c, int *count);
+int		ft_putchar(char c, int *count);
 int		ft_putstr(char *s, int *count);
 int		ft_print_hex(unsigned long val, int *count);
 int		ft_lowercase_base(unsigned long val, int *count);
