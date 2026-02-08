@@ -6,21 +6,21 @@
 /*   By: cbozkurt <cbozkurt@student.42kocaeli.com.  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/07 00:29:26 by cbozkurt          #+#    #+#             */
-/*   Updated: 2026/02/07 00:52:25 by cbozkurt         ###   ########.fr       */
+/*   Updated: 2026/02/08 17:07:15 by cbozkurt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
 
-int	ft_print_u(unsigned int n)
+void	ft_print_u(unsigned int n, int *count)
 {
 	char	c;
-	int		count;
 
-	count = 0;
 	if (n >= 10)
-		count += ft_print_u(n / 10);
+		ft_print_u(n / 10, count);
 	c = (n % 10) + '0';
-	write(1, &c, 1);
-	return (count + 1);
+	if (write(1, &c, 1) == -1)
+		*count = -1;
+	else if (*count != -1)
+		(*count)++;
 }
