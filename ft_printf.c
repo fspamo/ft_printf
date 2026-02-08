@@ -6,7 +6,7 @@
 /*   By: cbozkurt <cbozkurt@student.42kocaeli.com.  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/03 02:38:03 by cbozkurt          #+#    #+#             */
-/*   Updated: 2026/02/08 15:21:04 by cbozkurt         ###   ########.fr       */
+/*   Updated: 2026/02/08 20:03:58 by cbozkurt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,50 +14,56 @@
 #include <stdarg.h>
 #include <unistd.h>
 
-int *handle_num(const char *format, int i, int *count, va_list args)
+void handle_str_char(const char format, int *count, va_list args)
 {
-	if (format[i] == 'c')
-		ft_putchar(va_arg(args, int), count);
-	else if (format[i] == 's')
-		ft_putstr(va_arg(args, char *), count);
-	else if (format[i] == 'd' || format[i] == 'i')
+	if (format == 's')
+	{
+		ft_putstr(va_arg(args, int), count);
+	}
+	else if (format == 'c')
+	{
+		write(1, va_arg(args, int), 1);
+	}
+}
+
+void handle_num(const char format, int *count, va_list args)
+{
+	if (format == 'd' || format == 'i')
 		ft_putnbr(va_arg(args, int), count);
-
-	return (count);
+	else if (format == 'u')
+		ft_print_u(va_arg(args, unsigned int), count);
 }
 
-int *handle_hex(const char *format, int i, int *count, va_list args)
+void handle_hex(const char format, int *count, va_list args)
 {
-	if (format[i] == 'p')
-		count += ft_print_hex(va_arg(args, int), count);
-	else if (format[i] == 'x')
-		count += ft_lowercase_base(va_arg(args, int), count);
-	else if (format[i] == 'X')
-		count += ft_uppercase_base(va_arg(args, int), count);
-	return (count);
+	if (format == 'p')
+		ft_print_hex((unsigned long)va_arg(args, void *), count);
+	else if (format == 'x')
+		ft_lowercase_base(va_arg(args, unsigned int), count);
+	else if (format == 'X')
+		ft_uppercase_base(va_arg(args, unsigned int), count);
 }
 
-int	ft_printf(const char *format, ...)
+int ft_printf(const char *format, ...)
 {
 	va_list args;
-	int		i;
-	int		count;
+	int i;
+	int count;
 
 	va_start(args, format);
 	i = 0;
 	count = 0;
 	while (format[i])
 	{
-		if (format[i] == '%' && format[i + 1])
+		if (format[i] == '%')
 		{
 			i++;
-			if (format[i] == 'd' || format[i] == 'i' || format[i] == 'u')
-				handle_num(format, i, &count, args);
-			if (format[i] == 'x' || format[i] == 'X' || format[i] == 'p')
-				handle_hex(format, i, &count, args);
+			handle_str_char(format[i], &count, args);
+			handle_num(format[i], &count, args);
+			handle_hex(format[i], &count, args);
 		}
 		else
-			count += ft_putchar(format[i], &count);
+			ft_putchar(format[i], &count);
 		i++;
 	}
 	va_end(args);
@@ -72,5 +78,5 @@ int main(void)
 
 	int val = 1337;
 
-	ft_printf("%s\n%s\n%s\n%d\n%p\n%x\n%X\n", s1, s2, s3, val, val);
+	ft_printf("%d \n %u \n %x \n %X", val, s1, s2, s3);
 }
