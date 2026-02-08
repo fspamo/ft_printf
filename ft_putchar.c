@@ -6,15 +6,15 @@
 /*   By: cbozkurt <cbozkurt@student.42kocaeli.com.  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/05 01:37:52 by cbozkurt          #+#    #+#             */
-/*   Updated: 2026/02/08 13:55:25 by cbozkurt         ###   ########.fr       */
+/*   Updated: 2026/02/09 00:43:42 by cbozkurt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
 
-int	ft_putchar(int c, int *count)
+int ft_putchar(char c, int *count)
 {
-	(void)count;
     write(1, &c, 1);
-    return (1);
+    (*count)++;
+    return (*count);
 }

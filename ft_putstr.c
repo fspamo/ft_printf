@@ -6,7 +6,7 @@
 /*   By: cbozkurt <cbozkurt@student.42kocaeli.com.  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/05 02:34:49 by cbozkurt          #+#    #+#             */
-/*   Updated: 2026/02/08 20:05:21 by cbozkurt         ###   ########.fr       */
+/*   Updated: 2026/02/09 01:47:55 by cbozkurt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,16 +15,16 @@
 
 int	ft_putstr(char *s, int *count)
 {
-	int	i;
-	
+	int i;
+
 	i = 0;
 	if (!s)
 		s = "(null)";
 	while (s[i])
 	{
-		count++;
 		write(1, &s[i], 1);
 		i++;
 	}
+	*count = *count + 1;
 	return (*count);
 }
