@@ -19,54 +19,29 @@ int	ft_printf(const char *format, ...)
 	va_list args;
 	int		i;
 	int		count;
-	va_start(args, format);
 
+	va_start(args, format);
 	i = 0;
 	count = 0;
 	while (format[i])
 	{
-		if (format[i] == '%' && format[i + 1] == 'c')
+		if (format[i] == '%' && format[i + 1])
 		{
-			count += ft_putchar(va_arg(args, int));
 			i++;
-		}
-		else if (format[i] == '%' && format[i + 1] == 's')
-		{
-			count += ft_putstr(va_arg(args, char *));
-			i++;
-		}
-		else if (format[i] == '%' && (format[i + 1] == 'd' || format[i + 1] == 'i'))
-		{
-			count += ft_putnbr(va_arg(args, int));
-			i++;
-		}
-		else if (format[i] == '%' && format[i + 1] == 'p')
-		{
-			write (1, "0x", 2);
-			count += ft_print_hex(va_arg(args, unsigned long), count);
-			i++;
-		}
-		else if (format[i] == '%' && format[i + 1] == 'x')
-		{
-			write (1, "0x", 2);
-			count += ft_lowercase_base(va_arg(args, unsigned long), count);
-			i++;
-		}
-		else if (format[i] == '%' && format[i + 1] == 'X')
-		{
-			write (1, "0x", 2);
-			count += ft_uppercase_base(va_arg(args, unsigned long), count);
-			i++;
-		}
-		else if (format[i] == '%' && format[i + 1] == 'u')
-		{
-			count += ft_print_u(va_arg(args, unsigned int));
-			i++;
+			if (format[i] == 'c')
+				count += ft_putchar(va_arg(args, int));
+			else if (format[i] == 's')
+				count += ft_putstr(va_arg(args, char *));
+			else if (format[i] == 'p')
+			{
+				count += write(1, "0x", 2);
+				count += ft_print_hex(va_arg(args, unsigned long), count);
+			}
+			else if (format[i] == 'd' || format[i] == 'i')
+				count += ft_putnbr(va_arg(args, int));
 		}
 		else
-		{
 			count += ft_putchar(format[i]);
-		}
 		i++;
 	}
 	va_end(args);
@@ -75,6 +50,8 @@ int	ft_printf(const char *format, ...)
 
 int main(void)
 {
-	int nbr = 42;
-	ft_printf("%u %X", nbr);
+	char s1[] = "someone in my mind ";
+	char s2[] = "someone ";
+	char s3[] = "not so different...";
+	ft_printf("%s\n%s\n%s\n", s1, s2, s3);
 }
