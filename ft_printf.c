@@ -6,7 +6,7 @@
 /*   By: cbozkurt <cbozkurt@student.42kocaeli.com.  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/03 02:38:03 by cbozkurt          #+#    #+#             */
-/*   Updated: 2026/02/09 01:26:42 by cbozkurt         ###   ########.fr       */
+/*   Updated: 2026/02/10 19:13:06 by cbozkurt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,8 +82,6 @@ int ft_printf(const char *format, ...)
 				handle_num(format[i], &count, args);
 			else if (format[i] == 'p' || format[i] == 'x' || format[i] == 'X')
 				handle_hex(format[i], &count, args);
-			// else if (!(format[i] == all)) !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-			// -1
 		}
 		else
 			ft_putchar(format[i], &count);
@@ -97,8 +95,10 @@ int ft_printf(const char *format, ...)
 
 int main(void)
 {
-	// ft_printf("%d", ft_printf("%%%"));
-	printf("%d", printf("%%%"));
+	int val = 42;
+	ft_printf("%%%", val);
+
+	// printf("%d", printf("%%%"));
 	// int ft_ret;
 	// int std_ret;
 	//
