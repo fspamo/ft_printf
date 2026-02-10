@@ -24,7 +24,7 @@ int	ft_putstr(char *s, int *count)
 	{
 		write(1, &s[i], 1);
 		i++;
+		*count = *count + 1;
 	}
-	*count = *count + 1;
 	return (*count);
 }

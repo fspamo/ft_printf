@@ -11,21 +11,19 @@
 /* ************************************************************************** */
 
 #include <unistd.h>
-#include <stddef.h>
 
-int	ft_uppercase_base(unsigned long	val, size_t count)
+void	ft_uppercase_base(unsigned long val, int *count)
 {
 	char	*base;
-	size_t	holder;
 
 	base = "0123456789ABCDEF";
-	if (count == (unsigned long) - 1)
-		return (-1);
-	if (val > 16)
+	if (val >= 16)
 		ft_uppercase_base(val / 16, count);
-	holder = count;
-	count += write(1, &base[val % 16], 1);
-	if (count == holder - 1)
-		return (-1);
-	return (count);
+	if (write(1, &base[val % 16], 1) == -1)
+	{
+		*count = -1;
+		return;
+	}
+	if (*count != -1)
+		(*count)++;
 }
