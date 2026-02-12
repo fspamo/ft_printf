@@ -74,6 +74,8 @@ int ft_printf(const char *format, ...)
 		if (format[i] == '%')
 		{
 			i++;
+			if (format[i] == '\0')
+				return (-1);
 			if (format[i] == '%')
 				ft_putchar('%', &count);
 			else if (format[i] == 's' || format[i] == 'c')
@@ -82,6 +84,8 @@ int ft_printf(const char *format, ...)
 				handle_num(format[i], &count, args);
 			else if (format[i] == 'p' || format[i] == 'x' || format[i] == 'X')
 				handle_hex(format[i], &count, args);
+			else
+				return (-1);
 		}
 		else
 			ft_putchar(format[i], &count);
@@ -95,8 +99,13 @@ int ft_printf(const char *format, ...)
 
 int main(void)
 {
-	int val = 42;
-	ft_printf("%%%", val);
+	int val;
+	val = ft_printf("%");
+	ft_printf("%d\n", val);
+	val = ft_printf("%%");
+	ft_printf("%d\n", val);
+	val = ft_printf("%%%");
+	ft_printf("%d", val);
 
 	// printf("%d", printf("%%%"));
 	// int ft_ret;
