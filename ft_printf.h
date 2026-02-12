@@ -19,7 +19,7 @@ int		ft_putnbr(int n, int *count);
 int		ft_putchar(char c, int *count);
 int		ft_putstr(char *s, int *count);
 int		ft_print_hex(unsigned long val, int *count);
-int		ft_lowercase_base(unsigned long val, int *count);
+int		ft_lowercase_base(unsigned long val, size_t *count);
 int		ft_print_u(unsigned int n, int *count);
 void	ft_uppercase_base(unsigned long val, int *count);
 
