@@ -14,9 +14,9 @@
 #include <stdarg.h>
 #include <unistd.h>
 
-static void handle_str_char(const char format, int *count, va_list args)
+static void	handle_str_char(const char format, int *count, va_list args)
 {
-	char c;
+	char	c;
 
 	if (format == 's')
 		ft_putstr(va_arg(args, char *), count);
@@ -28,7 +28,7 @@ static void handle_str_char(const char format, int *count, va_list args)
 	}
 }
 
-static void handle_num(const char format, int *count, va_list args)
+static void	handle_num(const char format, int *count, va_list args)
 {
 	if (format == 'd' || format == 'i')
 		ft_putnbr(va_arg(args, int), count);
@@ -36,9 +36,9 @@ static void handle_num(const char format, int *count, va_list args)
 		ft_print_u(va_arg(args, unsigned int), count);
 }
 
-static void handle_hex(const char format, int *count, va_list args)
+static void	handle_hex(const char format, int *count, va_list args)
 {
-	void *p_nilcase;
+	void	*p_nilcase;
 
 	if (format == 'p')
 	{
@@ -58,11 +58,32 @@ static void handle_hex(const char format, int *count, va_list args)
 		ft_uppercase_base(va_arg(args, unsigned int), count);
 }
 
-int ft_printf(const char *format, ...)
+static int	handle_flag(const char *format, int *i, int *count, va_list args)
 {
-	va_list args;
-	int i;
-	int count;
+	if (format[*i] == '%')
+	{
+		(*i)++;
+		if (format[*i] == '\0')
+			return (-1);
+		if (format[*i] == '%')
+			ft_putchar('%', count);
+		else if (format[*i] == 's' || format[*i] == 'c')
+			handle_str_char(format[*i], count, args);
+		else if (format[*i] == 'd' || format[*i] == 'i' || format[*i] == 'u')
+			handle_num(format[*i], count, args);
+		else if (format[*i] == 'p' || format[*i] == 'x' || format[*i] == 'X')
+			handle_hex(format[*i], count, args);
+		else
+			return (-1);
+	}
+	return (0);
+}
+
+int	ft_printf(const char *format, ...)
+{
+	va_list	args;
+	int		i;
+	int		count;
 
 	va_start(args, format);
 	i = 0;
@@ -73,18 +94,7 @@ int ft_printf(const char *format, ...)
 	{
 		if (format[i] == '%')
 		{
-			i++;
-			if (format[i] == '\0')
-				return (-1);
-			if (format[i] == '%')
-				ft_putchar('%', &count);
-			else if (format[i] == 's' || format[i] == 'c')
-				handle_str_char(format[i], &count, args);
-			else if (format[i] == 'd' || format[i] == 'i' || format[i] == 'u')
-				handle_num(format[i], &count, args);
-			else if (format[i] == 'p' || format[i] == 'x' || format[i] == 'X')
-				handle_hex(format[i], &count, args);
-			else
+			if (handle_flag(format, &i, &count, args) == -1)
 				return (-1);
 		}
 		else
@@ -92,144 +102,4 @@ int ft_printf(const char *format, ...)
 		i++;
 	}
 	return (va_end(args), count);
-}
-
-#include <stdio.h>
-#include <limits.h>
-
-int main(void)
-{
-	int val;
-	val = ft_printf("%");
-	ft_printf("%d\n", val);
-	val = ft_printf("%%");
-	ft_printf("%d\n", val);
-	val = ft_printf("%%%");
-	ft_printf("%d", val);
-
-	// printf("%d", printf("%%%"));
-	// int ft_ret;
-	// int std_ret;
-	//
-	// ft_printf(NULL);
-	//
-	// printf("=== CHARACTER TESTS ===\n");
-	// ft_ret = ft_printf("ft:  [%c]\n", 'A');
-	// std_ret = printf("std: [%c]\n", 'A');
-	// printf("Returns: ft=%d, std=%d\n\n", ft_ret, std_ret);
-	//
-	// ft_ret = ft_printf("ft:  [%c%c%c]\n", 'a', 'b', 'c');
-	// std_ret = printf("std: [%c%c%c]\n", 'a', 'b', 'c');
-	// printf("Returns: ft=%d, std=%d\n\n", ft_ret, std_ret);
-	//
-	// ft_ret = ft_printf("ft:  [%c]\n", 0);
-	// std_ret = printf("std: [%c]\n", 0);
-	// printf("Returns: ft=%d, std=%d\n\n", ft_ret, std_ret);
-	//
-	// printf("=== STRING TESTS ===\n");
-	// ft_ret = ft_printf("ft:  [%s]\n", "Hello World");
-	// std_ret = printf("std: [%s]\n", "Hello World");
-	// printf("Returns: ft=%d, std=%d\n\n", ft_ret, std_ret);
-	//
-	// ft_ret = ft_printf("ft:  [%s]\n", "");
-	// std_ret = printf("std: [%s]\n", "");
-	// printf("Returns: ft=%d, std=%d\n\n", ft_ret, std_ret);
-	//
-	// printf("=== INTEGER TESTS ===\n");
-	// ft_ret = ft_printf("ft:  [%d]\n", 42);
-	// std_ret = printf("std: [%d]\n", 42);
-	// printf("Returns: ft=%d, std=%d\n\n", ft_ret, std_ret);
-	//
-	// ft_ret = ft_printf("ft:  [%d]\n", -42);
-	// std_ret = printf("std: [%d]\n", -42);
-	// printf("Returns: ft=%d, std=%d\n\n", ft_ret, std_ret);
-	//
-	// ft_ret = ft_printf("ft:  [%d]\n", 0);
-	// std_ret = printf("std: [%d]\n", 0);
-	// printf("Returns: ft=%d, std=%d\n\n", ft_ret, std_ret);
-	//
-	// ft_ret = ft_printf("ft:  [%i]\n", INT_MAX);
-	// std_ret = printf("std: [%i]\n", INT_MAX);
-	// printf("Returns: ft=%d, std=%d\n\n", ft_ret, std_ret);
-	//
-	// ft_ret = ft_printf("ft:  [%i]\n", INT_MIN);
-	// std_ret = printf("std: [%i]\n", INT_MIN);
-	// printf("Returns: ft=%d, std=%d\n\n", ft_ret, std_ret);
-	//
-	// printf("=== UNSIGNED TESTS ===\n");
-	// ft_ret = ft_printf("ft:  [%u]\n", 42);
-	// std_ret = printf("std: [%u]\n", 42);
-	// printf("Returns: ft=%d, std=%d\n\n", ft_ret, std_ret);
-	//
-	// ft_ret = ft_printf("ft:  [%u]\n", 0);
-	// std_ret = printf("std: [%u]\n", 0);
-	// printf("Returns: ft=%d, std=%d\n\n", ft_ret, std_ret);
-	//
-	// ft_ret = ft_printf("ft:  [%u]\n", UINT_MAX);
-	// std_ret = printf("std: [%u]\n", UINT_MAX);
-	// printf("Returns: ft=%d, std=%d\n\n", ft_ret, std_ret);
-	//
-	// ft_ret = ft_printf("ft:  [%u]\n", -42);
-	// std_ret = printf("std: [%u]\n", -42);
-	// printf("Returns: ft=%d, std=%d\n\n", ft_ret, std_ret);
-	//
-	// printf("=== HEXADECIMAL LOWERCASE TESTS ===\n");
-	// ft_ret = ft_printf("ft:  [%x]\n", 255);
-	// std_ret = printf("std: [%x]\n", 255);
-	// printf("Returns: ft=%d, std=%d\n\n", ft_ret, std_ret);
-	//
-	// ft_ret = ft_printf("ft:  [%x]\n", 0);
-	// std_ret = printf("std: [%x]\n", 0);
-	// printf("Returns: ft=%d, std=%d\n\n", ft_ret, std_ret);
-	//
-	// ft_ret = ft_printf("ft:  [%x]\n", -1);
-	// std_ret = printf("std: [%x]\n", -1);
-	// printf("Returns: ft=%d, std=%d\n\n", ft_ret, std_ret);
-	//
-	// printf("=== HEXADECIMAL UPPERCASE TESTS ===\n");
-	// ft_ret = ft_printf("ft:  [%X]\n", 255);
-	// std_ret = printf("std: [%X]\n", 255);
-	// printf("Returns: ft=%d, std=%d\n\n", ft_ret, std_ret);
-	//
-	// ft_ret = ft_printf("ft:  [%X]\n", 0);
-	// std_ret = printf("std: [%X]\n", 0);
-	// printf("Returns: ft=%d, std=%d\n\n", ft_ret, std_ret);
-	//
-	// printf("=== POINTER TESTS ===\n");
-	// int x = 42;
-	// ft_ret = ft_printf("ft:  [%p]\n", &x);
-	// std_ret = printf("std: [%p]\n", &x);
-	// printf("Returns: ft=%d, std=%d\n\n", ft_ret, std_ret);
-	//
-	// ft_ret = ft_printf("ft:  [%p]\n", NULL);
-	// std_ret = printf("std: [%p]\n", NULL);
-	// printf("Returns: ft=%d, std=%d\n\n", ft_ret, std_ret);
-	//
-	// printf("=== PERCENT TESTS ===\n");
-	// ft_ret = ft_printf("ft:  [%%]\n");
-	// std_ret = printf("std: [%%]\n");
-	// printf("Returns: ft=%d, std=%d\n\n", ft_ret, std_ret);
-	//
-	// ft_ret = ft_printf("ft:  [%%%%]\n");
-	// std_ret = printf("std: [%%%%]\n");
-	// printf("Returns: ft=%d, std=%d\n\n", ft_ret, std_ret);
-	//
-	// printf("=== MIXED TESTS ===\n");
-	// ft_ret = ft_printf("ft:  [%s %d %c %x]\n", "test", 42, 'A', 255);
-	// std_ret = printf("std: [%s %d %c %x]\n", "test", 42, 'A', 255);
-	// printf("Returns: ft=%d, std=%d\n\n", ft_ret, std_ret);
-	//
-	// ft_ret = ft_printf("ft:  [%c%c%c%c%c]\n", 'H', 'e', 'l', 'l', 'o');
-	// std_ret = printf("std: [%c%c%c%c%c]\n", 'H', 'e', 'l', 'l', 'o');
-	// printf("Returns: ft=%d, std=%d\n\n", ft_ret, std_ret);
-	//
-	// ft_ret = ft_printf("ft:  No format\n");
-	// std_ret = printf("std: No format\n");
-	// printf("Returns: ft=%d, std=%d\n\n", ft_ret, std_ret);
-	//
-	// ft_ret = ft_printf("ft:  [%d %i %u]\n", -123, 456, 789);
-	// std_ret = printf("std: [%d %i %u]\n", -123, 456, 789);
-	// printf("Returns: ft=%d, std=%d\n\n", ft_ret, std_ret);
-
-	return (0);
 }
