@@ -1,11 +1,11 @@
 *This project has been created as part of the 42 curriculum by cbozkurt.*
 
-# Libft
+# ft_printf
 
 ## Description
 
 **ft_printf** is a foundational project in the 42 curriculum.  
-The goal of this project is to create very own implementation of the C function ft_printf.
+The goal of this project is to create very own implementation of the libc function ft_printf.
 
 Through this project, students learn:
 - What is going on under hood of C function printf. 
