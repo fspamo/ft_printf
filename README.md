@@ -14,7 +14,9 @@ Through this project, students learn:
 - Learning the compiler differences and behaviours.
 ### Worth Mentioning:
 The original libc function **printf** and my own implementation **ft_printf** doesn't flush the stdout the same way.
-Basically; my ft_printf is using the low-level function **write** instead of 
+Basically; my ft_printf is using the low-level function **write** instead of making us doing the buffer management.
+in short, the outputs are being flushed at different times.
+In skae of keeping stability intact, using **ONLY** printf or using ft_printf **ONLY** is highly encouraged. 
 
 ---
 
