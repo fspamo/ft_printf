@@ -22,7 +22,7 @@ void	ft_uppercase_base(unsigned long val, int *count)
 	if (write(1, &base[val % 16], 1) == -1)
 	{
 		*count = -1;
-		return;
+		return ;
 	}
 	if (*count != -1)
 		(*count)++;
