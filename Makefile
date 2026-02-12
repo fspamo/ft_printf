@@ -1,5 +1,5 @@
 
-NAME =  ft_printf.a
+NAME =	libftprintf.a
 
 CC = cc
 
