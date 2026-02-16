@@ -27,7 +27,11 @@ int	ft_putnbr(int n, int *count)
 	if (nb >= 10)
 		ft_putnbr(nb / 10, count);
 	c = (nb % 10) + '0';
-	write(1, &c, 1);
+	if (write(1, &c, 1))
+	{
+		*count = -1;
+		return (-1);
+	}
 	(*count)++;
 	return (*count);
 }
