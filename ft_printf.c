@@ -69,14 +69,14 @@ static int	handle_flag(const char *format, int *i, int *count, va_list args)
 		(*i)++;
 		if (format[*i] == '\0')
 			return (-1);
-		if (format[*i] == '%')
-			ft_putchar('%', count);
 		else if (format[*i] == 's' || format[*i] == 'c')
 			handle_str_char(format[*i], count, args);
 		else if (format[*i] == 'd' || format[*i] == 'i' || format[*i] == 'u')
 			handle_num(format[*i], count, args);
 		else if (format[*i] == 'p' || format[*i] == 'x' || format[*i] == 'X')
 			handle_hex(format[*i], count, args);
+		else if (format[*i] == '%')
+			ft_putchar('%', count);
 		else
 			return (-1);
 	}
