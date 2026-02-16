@@ -14,7 +14,7 @@
 #include <stdarg.h>
 #include <unistd.h>
 
-static void	handle_str_char(const char format, int *count, va_list args)
+static int	handle_str_char(const char format, int *count, va_list args)
 {
 	char	c;
 
@@ -23,9 +23,11 @@ static void	handle_str_char(const char format, int *count, va_list args)
 	else if (format == 'c')
 	{
 		c = (char)va_arg(args, int);
-		write(1, &c, 1);
+		if (write(1, &c, 1) == -1)
+			return (-1);
 		(*count)++;
 	}
+	return (0);
 }
 
 static void	handle_num(const char format, int *count, va_list args)
@@ -36,7 +38,7 @@ static void	handle_num(const char format, int *count, va_list args)
 		ft_print_u(va_arg(args, unsigned int), count);
 }
 
-static void	handle_hex(const char format, int *count, va_list args)
+static int	handle_hex(const char format, int *count, va_list args)
 {
 	void	*p_nilcase;
 
@@ -47,7 +49,8 @@ static void	handle_hex(const char format, int *count, va_list args)
 			ft_putstr("(nil)", count);
 		else
 		{
-			write(1, "0x", 2);
+			if (write(1, "0x", 2) != 2)
+				return (-1);
 			*count += 2;
 			ft_print_hex((unsigned long)p_nilcase, count);
 		}
@@ -56,6 +59,7 @@ static void	handle_hex(const char format, int *count, va_list args)
 		ft_print_hex(va_arg(args, unsigned int), count);
 	else if (format == 'X')
 		ft_uppercase_base(va_arg(args, unsigned int), count);
+	return (0);
 }
 
 static int	handle_flag(const char *format, int *i, int *count, va_list args)
