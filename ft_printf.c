@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: cbozkurt <cbozkurt@student.42kocaeli.com.  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/02/16 20:15:27 by cbozkurt          #+#    #+#             */
-/*   Updated: 2026/02/16 20:15:29 by cbozkurt         ###   ########.fr       */
+/*   Created: 2026/02/12 23:23:51 by cbozkurt          #+#    #+#             */
+/*   Updated: 2026/02/14 04:58:29 by cbozkurt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include <stdarg.h>
 #include <unistd.h>
 
-static int	handle_str_char(const char format, int *count, va_list args)
+static void	handle_str_char(const char format, int *count, va_list args)
 {
 	char	c;
 
@@ -23,11 +23,9 @@ static int	handle_str_char(const char format, int *count, va_list args)
 	else if (format == 'c')
 	{
 		c = (char)va_arg(args, int);
-		if (write(1, &c, 1) == -1)
-			return (-1);
+		write(1, &c, 1);
 		(*count)++;
 	}
-	return (0);
 }
 
 static void	handle_num(const char format, int *count, va_list args)
@@ -38,7 +36,7 @@ static void	handle_num(const char format, int *count, va_list args)
 		ft_print_u(va_arg(args, unsigned int), count);
 }
 
-static int	handle_hex(const char format, int *count, va_list args)
+static void	handle_hex(const char format, int *count, va_list args)
 {
 	void	*p_nilcase;
 
@@ -49,8 +47,7 @@ static int	handle_hex(const char format, int *count, va_list args)
 			ft_putstr("(nil)", count);
 		else
 		{
-			if (write(1, "0x", 2) != 2)
-				return (-1);
+			write(1, "0x", 2);
 			*count += 2;
 			ft_print_hex((unsigned long)p_nilcase, count);
 		}
@@ -59,7 +56,6 @@ static int	handle_hex(const char format, int *count, va_list args)
 		ft_print_hex(va_arg(args, unsigned int), count);
 	else if (format == 'X')
 		ft_uppercase_base(va_arg(args, unsigned int), count);
-	return (0);
 }
 
 static int	handle_flag(const char *format, int *i, int *count, va_list args)
@@ -69,14 +65,14 @@ static int	handle_flag(const char *format, int *i, int *count, va_list args)
 		(*i)++;
 		if (format[*i] == '\0')
 			return (-1);
+		if (format[*i] == '%')
+			ft_putchar('%', count);
 		else if (format[*i] == 's' || format[*i] == 'c')
 			handle_str_char(format[*i], count, args);
 		else if (format[*i] == 'd' || format[*i] == 'i' || format[*i] == 'u')
 			handle_num(format[*i], count, args);
 		else if (format[*i] == 'p' || format[*i] == 'x' || format[*i] == 'X')
 			handle_hex(format[*i], count, args);
-		else if (format[*i] == '%')
-			ft_putchar('%', count);
 		else
 			return (-1);
 	}
@@ -93,7 +89,7 @@ int	ft_printf(const char *format, ...)
 	i = 0;
 	count = 0;
 	if (!format)
-		return (va_end(args), -1);
+		return (va_end(args), 0);
 	while (format[i])
 	{
 		if (format[i] == '%')

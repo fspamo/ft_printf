@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: cbozkurt <cbozkurt@student.42kocaeli.com.  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/02/16 20:16:14 by cbozkurt          #+#    #+#             */
-/*   Updated: 2026/02/16 20:16:15 by cbozkurt         ###   ########.fr       */
+/*   Created: 2026/02/05 01:37:52 by cbozkurt          #+#    #+#             */
+/*   Updated: 2026/02/09 00:43:42 by cbozkurt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,7 @@
 
 int	ft_putchar(char c, int *count)
 {
-	if (write(1, &c, 1) == -1)
-	{
-		*count = -1;
-		return (-1);
-	}
+	write(1, &c, 1);
 	(*count)++;
 	return (*count);
 }
