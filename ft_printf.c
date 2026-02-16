@@ -93,7 +93,7 @@ int	ft_printf(const char *format, ...)
 	i = 0;
 	count = 0;
 	if (!format)
-		return (va_end(args), 0);
+		return (va_end(args), -1);
 	while (format[i])
 	{
 		if (format[i] == '%')
