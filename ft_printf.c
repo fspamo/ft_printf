@@ -23,7 +23,11 @@ static void	handle_str_char(const char format, int *count, va_list args)
 	else if (format == 'c')
 	{
 		c = (char)va_arg(args, int);
-		write(1, &c, 1);
+		if (write(1, &c, 1) == -1)
+		{
+			*count = -1;
+			return ;
+		}
 		(*count)++;
 	}
 }
@@ -47,7 +51,11 @@ static void	handle_hex(const char format, int *count, va_list args)
 			ft_putstr("(nil)", count);
 		else
 		{
-			write(1, "0x", 2);
+			if (write(1, "0x", 2))
+			{
+				*count = -1;
+				return ;
+			}
 			*count += 2;
 			ft_print_hex((unsigned long)p_nilcase, count);
 		}
